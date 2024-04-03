@@ -1,4 +1,14 @@
+/boules/
+/fonds/
+/murs/
+/personnages/
+/sons/
+/EntréeJeu$1.class
+/EntréeJeu.class
+/ChoixJoueur$1.class
+/ChoixJoueur.class
+/Arene$1.class
+/Arene.class
 /controleur/
-/modele/
-/outils/
+/Controle.class
 /vue/
