@@ -51,6 +51,7 @@ public class ChoixJoueur extends JFrame {
 	private void lblGo_clic() {
 		this.frmArene = new Arene();
 		this.frmArene.setVisible(true);
+		this.dispose();
 		
 	}
 
@@ -61,6 +62,8 @@ public class ChoixJoueur extends JFrame {
 		/*
 		this.getContentPane().setPreferredSize(new Dimension(400,275));
 		this.pack();*/
+		//interdiction de changer la taille
+		this.setResizable(false);
 		setTitle("Choice");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 430, 315);

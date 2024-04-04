@@ -1,5 +1,6 @@
 package vue;
 
+import controleur.Controle;
 import vue.ChoixJoueur;
 import vue.Arene;
 import java.awt.EventQueue;
@@ -17,8 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
-import vue.Arene;
-import vue.Arene;
+
 
 public class EntreeJeu extends JFrame {
 
@@ -27,10 +27,11 @@ public class EntreeJeu extends JFrame {
 	private JTextField txtIP;
 	private Arene frmArene;
 	private ChoixJoueur frmChoixJoueur;
+	private Controle controle;
 	
 	/**
 	 * Launch the application.
-	 */
+	 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -42,29 +43,18 @@ public class EntreeJeu extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 	
 	/**
 	 * Méthode évenementielle
 	 */
 	
-	public void disposeof() {
-		EntreeJeu frmEntreeJeu = new EntreeJeu();
-		setDefaultCloseOperation(frmEntreeJeu.DISPOSE_ON_CLOSE);
-		
-	}
-	
 	public void btnStart_clic() {
-		 
-		this.frmArene = new Arene();
-		this.frmArene.setVisible(true);
-		disposeof();
+		 this.controle.evenementEntreeJeu("serveur");
 	}
 	
 	public void btnConnect_clic() {
-		this.frmChoixJoueur = new ChoixJoueur();
-		this.frmChoixJoueur.setVisible(true);
-		disposeof();
+		this.controle.evenementEntreeJeu(this.txtIP.getText());
 	}
 	
 	public void btnExit_clic() {
@@ -79,13 +69,14 @@ public class EntreeJeu extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EntreeJeu() {
+	public EntreeJeu(Controle controle) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 620, 355);
+		setBounds(100, 100, 431, 230);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		this.controle = controle;
 		
 		JLabel lblNewLabel = new JLabel("Start a serveur :");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -104,12 +95,13 @@ public class EntreeJeu extends JFrame {
 		
 		txtIP = new JTextField();
 		txtIP.setText("127.0.0.1");
-		txtIP.addInputMethodListener(new InputMethodListener() {
+		txtIP.addInputMethodListener(new InputMethodListener(){
 			public void caretPositionChanged(InputMethodEvent event) {
 			}
 			public void inputMethodTextChanged(InputMethodEvent event) {
 				txtIP_textchanged();
 			}
+		
 		});
 		txtIP.setBounds(106, 94, 109, 19);
 		contentPane.add(txtIP);

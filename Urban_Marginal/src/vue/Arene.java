@@ -14,6 +14,7 @@ public class Arene extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	
 
 	/**
 	 * Launch the application.
@@ -35,8 +36,10 @@ public class Arene extends JFrame {
 	 * Create the frame.
 	 */
 	public Arene() {
-		this.getContentPane().setPreferredSize(new Dimension(800,600));
+		this.getContentPane().setPreferredSize(new Dimension(800,600 + 25 + 140));
 		this.pack();
+		//interdiction de changer taille
+		this.setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 837, 642);
 		contentPane = new JPanel();
