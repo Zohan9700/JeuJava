@@ -1,14 +1,18 @@
 package controleur;
 
+import vue.Arene;
 import modele.JeuClient;
 import modele.JeuServeur;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import modele.Jeu;
 import vue.ChoixJoueur;
 import outils.connexion.*;
 import outils.connexion.AsyncResponse;
 import outils.connexion.Connection;
 import outils.connexion.ServeurSocket;
-import vue.Arene;
 import vue.EntreeJeu;
 
 /**
@@ -45,11 +49,12 @@ public class Controle implements AsyncResponse, Global {
 	 * Methode evenement entre jeu
 	 */
 	public void evenementEntreeJeu(String info) {
-		if (info.equals("serveur")) {
+		if (info.equals(SERVEUR)) {
 			new ServeurSocket(this, PORT);
 			this.leJeu = new JeuServeur(this);
 			this.frmEntreeJeu.dispose();
 			this.frmArene = new Arene();
+			((JeuServeur)this.leJeu).constructionMurs();
 			this.frmArene.setVisible(true);
 		} else {
 			new ClientSocket(this, info, PORT);
@@ -68,7 +73,46 @@ public class Controle implements AsyncResponse, Global {
 	}
 	
 	/**
-	 * Methode envoie provenant de Jeu
+	 * methode evenement jeu serveur
+	 */
+	public void evenementJeuServeur(String ordre, Object info) {
+		switch(ordre) {
+		case AJOUTMUR :
+			frmArene.ajoutMur(info);
+			break;
+		case AJOUTPANELMURS :
+			this.leJeu.envoi((Connection)info, this.frmArene.getJpnMurs());
+			break;
+		case AJOUTJLABELJEU :
+			this.frmArene.ajoutJLabelJeu((JLabel)info);
+			break;
+		case MODIFPANELJEU :
+			this.leJeu.envoi((Connection)info, this.frmArene.getJpnJeu());
+			break;
+		}
+	}
+	
+	/**
+	 * Demande provenant de JeuClient
+	 * @param ordre, ordre à exécuter
+	 * @param info, information à traiter
+	 */
+	public void evenementJeuClient(String ordre, Object info) {
+		switch(ordre) {
+		case AJOUTPANELMURS :
+			this.frmArene.setJpnMurs((JPanel)info);
+			break;
+		case MODIFPANELJEU :
+			this.frmArene.setJpnJeu((JPanel)info);
+			break;
+		}
+	}
+	
+	
+	/**
+	 * Envoi d'information vers l'ordinateur distant
+	 * @param connection objet de connexion pour l'envoi vers l'ordinateur distant
+	 * @param info information à envoyer
 	 */
 	public void envoi(Connection connection, Object info) {
 		connection.envoi(info);

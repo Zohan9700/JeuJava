@@ -1,5 +1,14 @@
 package modele;
 
+import java.awt.Font;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
 import controleur.Global;
 /**
  * Gestion des joueurs
@@ -15,6 +24,10 @@ public class Joueur extends Objet implements Global {
 	 * n� correspondant au personnage (avatar) pour le fichier correspondant
 	 */
 	private int numPerso ; 
+	/**
+	 * message qui s'affiche sous le personnage (contenant pseudo et vie)
+	 */
+	private JLabel message;
 	/**
 	 * instance de JeuServeur pour communiquer avec lui
 	 */
@@ -37,30 +50,64 @@ public class Joueur extends Objet implements Global {
 	private int orientation ;
 	
 	/**
-	 * Constructeur
+	 * Constructeur : récupération de jeuServeur et initialisation de certaines propriétés
+	 * @param jeuServeur instance de JeuServeur pour lui envoyer des informations
 	 */
-	public Joueur() {
+	public Joueur(JeuServeur jeuServeur) {
+		this.jeuServeur = jeuServeur;
+		this.vie = MAXVIE;
+		this.etape = 1;
+		this.orientation = DROITE;
 	}
 
 	/**
 	 * Initialisation d'un joueur (pseudo et num�ro, calcul de la 1�re position, affichage, cr�ation de la boule)
 	 */
-	public void initPerso(String pseudo, int numPerso) {
+	public void initPerso(String pseudo, int numPerso, Collection<Joueur> lesJoueurs, ArrayList<Mur> lesMurs) {
 		this.pseudo = pseudo;
 		this.numPerso = numPerso;
 		System.out.println("joueur"+ pseudo + " - num perso" + numPerso + "crée");
+		//création du label personnage
+		super.jLabel = new JLabel();
+		//création du label du message sous le joueur
+		this.message = new JLabel();
+		message.setHorizontalAlignment(SwingConstants.CENTER);
+		message.setFont(new Font("Dialog", Font.PLAIN, 8));
+		//calcul de la première position d'un perso
+		this.premierePosition(lesJoueurs, lesMurs);
+		// demande d'ajout du label perso et du message dans l'arene du serveur
+		this.jeuServeur.ajoutJLabelJeuArene(jLabel);
+		this.jeuServeur.ajoutJLabelJeuArene(message);
+		// afficher le perso
+		this.affiche(MARCHE, this.etape);
 	}
 
 	/**
 	 * Calcul de la premi�re position al�atoire du joueur (sans chevaucher un autre joueur ou un mur)
 	 */
-	private void premierePosition() {
+	private void premierePosition(Collection<Joueur> lesJoueurs, ArrayList<Mur> lesMurs) {
+		jLabel.setBounds(0, 0, LARGEURPERSO, HAUTEURPERSO);
+		do {
+			posX = (int) Math.round(Math.random() * (LARGEURARENE - LARGEURPERSO));
+			posY = (int) Math.round(Math.random() * (HAUTEURARENE - HAUTEURPERSO - HAUTEURMESSAGE));
+		}while(this.toucheJoueur(lesJoueurs) || this.toucheMur(lesMurs));
 	}
 	
 	/**
 	 * Affiche le personnage et son message
 	 */
-	public void affiche() {
+	public void affiche(String etat, int etape) {
+		//positionnement du personnage et affectation de la bonne image
+		super.jLabel.setBounds(posX, posY, LARGEURPERSO, HAUTEURPERSO);
+		String chemin = CHEMINPERSONNAGES + PERSO + this.numPerso+etat+etape+"d"+this.orientation+EXTFICHIERPERSO;
+		URL resource = getClass().getClassLoader().getResource(chemin);
+		super.jLabel.setIcon(new ImageIcon(resource));
+		//positionnement et remplissage du message
+		this.message.setBounds(posX-10, posY-HAUTEURPERSO, LARGEURPERSO+10, HAUTEURMESSAGE);
+		this.message.setText(pseudo+" : "+vie);
+		//demande d'envoie à tous des modification d'affichache
+		this.jeuServeur.envoieJeuATous();
+		
 	}
 
 	/**
@@ -79,16 +126,28 @@ public class Joueur extends Objet implements Global {
 	 * Contr�le si le joueur touche un des autres joueurs
 	 * @return true si deux joueurs se touchent
 	 */
-	private Boolean toucheJoueur() {
-		return null;
+	private Boolean toucheJoueur(Collection<Joueur> lesJoueurs) {
+		for(Joueur unJoueur : lesJoueurs) {
+			if(!this.equals(unJoueur)) {
+				if(super.toucheObjet(unJoueur)) {
+					return true;
+				}			
+			}
+		}
+		return false;
 	}
 
 	/**
 	* Contr�le si le joueur touche un des murs
 	 * @return true si un joueur touche un mur
 	 */
-	private Boolean toucheMur() {
-		return null;
+	private Boolean toucheMur(ArrayList<Mur> lesMurs) {
+		for(Mur unMur : lesMurs) {
+			if(super.toucheObjet(unMur)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
