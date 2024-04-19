@@ -1,5 +1,7 @@
 package modele;
 
+import java.util.Collection;
+
 import javax.swing.JLabel;
 
 /**
@@ -19,6 +21,14 @@ public abstract class Objet {
 	protected Integer posY ;
 	
 	protected JLabel jLabel;
+	
+	public Integer getPosX() {
+		return posX;
+	}
+	
+	public Integer getPosY() {
+		return posY;
+	}
 	
 	/**
 	 * 
@@ -44,6 +54,17 @@ public abstract class Objet {
 					this.posY+this.jLabel.getHeight()>objet.posY &&
 					this.posY<objet.posY+objet.jLabel.getHeight());
 		}
+	}
+	
+	public Objet toucheCollectionObjets (Collection<Objet> lesObjets) {
+		for (Objet unObjet : lesObjets) {
+			if (!unObjet.equals(this)) {
+				if (toucheObjet(unObjet)) {
+					return unObjet;
+				}
+			}
+		}
+		return null;
 	}
 		
 }

@@ -143,6 +143,14 @@ public interface Global {
 	 */
 	int HAUTEURMESSAGE = 8;
 	/**
+	 * largeur de la boule
+	 */
+	int LARGEURBOULE = 17;
+	/**
+	 * hauteur de la boule
+	 */
+	int HAUTEURBOULE = 17;
+	/**
 	 * orientation du personnage vers la gauche
 	 */
 	int GAUCHE = 0;
@@ -158,6 +166,14 @@ public interface Global {
 	 * nombre d'étapes (d'images) pour donner l'impression de marche
 	 */
 	int NBETAPEMARCHE = 4;
+	/**
+	 * nombre d'étape (image) pour donner l'impression d'être touché
+	 */
+	int NBETAPESTOUCHE = 2;
+	/**
+	 * nombre d'étape (image) pour donner l'impression de mourir
+	 */
+	int NBETAPESMORT = 2;
 	/**
 	 * Message serveur pour la creation d'un serveur
 	 */
