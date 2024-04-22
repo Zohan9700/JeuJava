@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="private" author="true" classpath="." destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="outils.son.exceptions,controleur,outils.son,outils.son.ecouteurs,vue,outils.connexion,modele" source="1.8" sourcepath="src;Media" splitindex="true" use="true" version="true">
+            <link href="file:/C:/Users/jhano/Downloads/Urban_Marginal_SQ2_S3_correction/Urban_Marginal/doc/"/>
+        </javadoc>
+    </target>
+</project>

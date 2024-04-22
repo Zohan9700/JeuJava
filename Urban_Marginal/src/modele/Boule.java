@@ -58,6 +58,8 @@ public class Boule extends Objet implements Global, Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		// envoi du son fight
+		this.jeuServeur.envoi(FIGHT);
 		//afficher l'attaquant à l'étape repos de la marche
 		this.attaquant.affiche(MARCHE, 1);
 		//rendre la boule visible
@@ -85,6 +87,8 @@ public class Boule extends Objet implements Global, Runnable {
 		}while(posX>=0 && posX<=LARGEURARENE && this.toucheCollectionObjets(lesMurs)==null && victime==null);
 		//vérifier s'il y a une victime et qu'elle n'est pas déjà morte
 		if(victime != null && !victime.estMort()) {
+			// envoi du son hurt
+			this.jeuServeur.envoi(HURT);
 			victime.perteVie();
 			attaquant.gainVie();
 			//joue l'animation de la victime blessée
@@ -94,6 +98,8 @@ public class Boule extends Objet implements Global, Runnable {
 			}
 			// controle si la victime est morte
 			if(victime.estMort()) {
+				//envoie du son mort
+				this.jeuServeur.envoi(DEATH);
 				//joue l'animation de la mort
 				for(int k=1; k<=NBETAPESMORT; k++) {
 					victime.affiche(MORT, k);

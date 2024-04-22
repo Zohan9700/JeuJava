@@ -1,5 +1,6 @@
 package vue;
 
+import outils.son.*;
 import controleur.Global;
 import controleur.Controle;
 import vue.Arene;
@@ -32,6 +33,10 @@ public class ChoixJoueur extends JFrame implements Global{
 	private static final int NBPERSOS = 3;
 	private int numPerso;
 	private JTextField txtPseudo;
+	private Son welcome;
+	private Son precedent;
+	private Son suivant;
+	private Son go;
 
 	/**
 	 * Launch the application.
@@ -55,11 +60,13 @@ public class ChoixJoueur extends JFrame implements Global{
 	private void lblPrecedent_clic() {
 		numPerso = ((numPerso+1)%NBPERSOS)+1;
 		affichePerso();
+		precedent.play();
 	}
 	
 	private void lblSuivant_clic() {
 		numPerso = (numPerso%NBPERSOS)+1;
 		affichePerso();
+		suivant.play();
 	}
 	
 	private void lblGo_clic() {
@@ -69,6 +76,7 @@ public class ChoixJoueur extends JFrame implements Global{
 		}
 		else {
 			this.controle.evenementChoixJoueur(this.txtPseudo.getText(), numPerso);
+			go.play();
 		}
 		
 	}
@@ -184,6 +192,13 @@ public class ChoixJoueur extends JFrame implements Global{
 		//affichage du premier perso
 		this.numPerso = 1;
 		this.affichePerso();
+		
+		//récupération des sons
+		precedent = new Son(getClass().getClassLoader().getResource(SONPRECEDENT));
+		suivant = new Son(getClass().getClassLoader().getResource(SONSUIVANT));
+		go = new Son(getClass().getClassLoader().getResource(SONGO));
+		welcome = new Son(getClass().getClassLoader().getResource(SONWELCOME));
+		welcome.play();
 		
 		//positionnement sur la zone de saisie
 		txtPseudo.requestFocus();

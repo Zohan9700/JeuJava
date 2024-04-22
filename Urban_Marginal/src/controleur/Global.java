@@ -51,6 +51,50 @@ public interface Global {
 	 */
 	String FONDARENE = CHEMINFONDS+"fondarene.jpg";
 	/**
+	 * Chemin son welcome 
+	 */
+	String SONWELCOME = CHEMINSONS + "welcome.wav";
+	/**
+	 * Chemin son precedent
+	 */
+	String SONPRECEDENT = CHEMINSONS + "precedent.wav";
+	/**
+	 * Chemin son suivant
+	 */
+	String SONSUIVANT = CHEMINSONS + "suivant.wav";
+	/**
+	 * chemin son go
+	 */
+	String SONGO = CHEMINSONS + "go.wav";
+	/**
+	 * Chemin son fight
+	 */
+	String SONFIGHT = CHEMINSONS+"fight.wav";
+	/**
+	 * Chemin du son hurt (joueur bless�)
+	 */
+	String SONHURT = CHEMINSONS+"hurt.wav";
+	/**
+	 * Chemin du son death (joueur tu�)
+	 */
+	String SONDEATH = CHEMINSONS+"death.wav";
+	/**
+	 * tableau des sons de la vue Arene
+	 */
+	String[] SON =  {CHEMINSONS + "fight.wav", CHEMINSONS + "hurt.wav", CHEMINSONS + "death.wav"} ;
+	/**
+	 * num�ro correspondant au son FIGHT
+	 */
+	int FIGHT = 0;
+	/**
+	 * num�ro correspondant au son HURT
+	 */
+	int HURT = 1;
+	/**
+	 * num�ro correspondant au son DEATH
+	 */
+	int DEATH = 2;
+	/**
 	 * Extension des fichiers des images des personnages
 	 */
 	String EXTFICHIERPERSO = ".gif";
@@ -214,6 +258,10 @@ public interface Global {
 	 * ordre pour executer une action (déplacement, tire de boule)
 	 */
 	String ACTION = "action";
+	/**
+	 * ordre pour jouer un son 
+	 */
+	String JOUESON = "joue son";
 	
 	
 	

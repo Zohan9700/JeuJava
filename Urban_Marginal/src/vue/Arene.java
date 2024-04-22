@@ -1,5 +1,6 @@
 package vue;
 
+import outils.son.*;
 import controleur.Controle;
 import controleur.Global;
 import java.net.URL;
@@ -24,6 +25,7 @@ public class Arene extends JFrame implements Global {
 	private JTextArea txtChat;
 	private Boolean client;
 	private Controle controle;
+	private Son[] lesSons = new Son[SON.length];
 
 	/**
 	 * Launch the application.
@@ -76,6 +78,10 @@ public class Arene extends JFrame implements Global {
 	public void ajoutJLabelJeu(JLabel unJLabel) {
 		this.jpnJeu.add(unJLabel);
 		this.jpnJeu.repaint();
+	}
+	
+	public void joueSon(Integer numSon) {
+		this.lesSons[numSon].play();
 	}
 
 	public void txtSaisie_KeyPressed(KeyEvent e) {
@@ -176,6 +182,13 @@ public class Arene extends JFrame implements Global {
 		lblNewLabel.setIcon(new ImageIcon(resource));
 		lblNewLabel.setBounds(0, 0, 800, 600);
 		contentPane.add(lblNewLabel);
+		
+		//gestion des sons pour le client
+		if(client) {
+			for (int k=0; k<SON.length; k++) {
+				lesSons[k] = new Son(getClass().getClassLoader().getResource(SON[k]));
+			}
+		}
 		
 		//récupération de l'instance de Controle
 		this.controle = controle;
